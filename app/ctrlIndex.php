@@ -25,7 +25,7 @@ class ctrlIndex extends ctrl {
                 setcookie('uid', $user['id'], time() + 86400 * 30, '/');
                 setcookie('key', $key, time() + 86400 * 30, '/');
                 $this->db->query("UPDATE admin SET cookie = ? WHERE id = ?", $key, $user['id']);
-                header("Location:".config::$ROOTPATH);
+header("Location:".config::$ROOTPATH);
             } else {
                 $this->error = "Invalid email or passowrd";
             }
@@ -39,17 +39,17 @@ class ctrlIndex extends ctrl {
         }
         setcookie('uid', '', 0, '/');
         setcookie('key', '', 0, '/');
-        header("Location:".config::$ROOTPATH);
+header("Location:".config::$ROOTPATH);
     }
     
     function add() {
         if (!$this->user) {
-            return header("Location: /Blog/");
+return header("Location: /Blog/");
         }
 
         if (!empty($_POST)) {
             $this->db->query("INSERT INTO post(title, post,ctime) VALUES(?,?,?)", htmlspecialchars($_POST['title']), $_POST['post'], time());
-            header("Location:".config::$ROOTPATH);
+header("Location:".config::$ROOTPATH);
         }
 
         $this->out('add.php');
@@ -61,17 +61,17 @@ class ctrlIndex extends ctrl {
         }
 
         $this->db->query("DELETE FROM post WHERE id = ?", $id);
-        header("Location:".config::$ROOTPATH);
+header("Location:".config::$ROOTPATH);
     }
 
     function edit($id) {
         if (!$this->user) {
-            return header("Location:".config::$ROOTPATH);
+return header("Location:".config::$ROOTPATH);
         }
 
         if (!empty($_POST)) {
             $this->db->query("UPDATE post SET title = ?, post = ? WHERE id = ?", htmlspecialchars($_POST['title']), $_POST['post'],$id);
-            return header("Location:".config::$ROOTPATH);
+return header("Location:".config::$ROOTPATH);
         }
 
         $this->post = $this->db->query("SELECT * FROM post WHERE id = ?", $id)->assoc();
@@ -90,7 +90,7 @@ class ctrlIndex extends ctrl {
     function addComment($postId){
         $this->db->query("INSERT INTO comment(author,text,postId) VALUES(?,?,?)",  htmlspecialchars($_POST['name']),htmlspecialchars($_POST['text']),$postId);
         setcookie('name', $_POST['name'], time() + 86400 * 30, '/');
-        header("Location:".config::$ROOTPATH."?post/".intval($postId));
+header("Location:".config::$ROOTPATH."?post/".intval($postId));
     }
     
     function delComment($id, $postId){
@@ -100,16 +100,17 @@ class ctrlIndex extends ctrl {
         
         $this->db->query("DELETE FROM comment WHERE id = ?", $id);
         
-        header("Location:".config::$ROOTPATH."?post/".intval($postId));
+header("Location:".config::$ROOTPATH."?post/".intval($postId));
     }
     
     function signup(){
         if (!empty($_POST)) {
             $this->db->query("INSERT INTO admin(email,pass) VALUES(?,?)",  htmlspecialchars($_POST['mail']),md5($_POST['pass']));
             $this->login();
-            header("Location:".config::$ROOTPATH);
+header("Location:".config::$ROOTPATH);
         }
         $this->out('signup.php');
     }
 
 }
+?>

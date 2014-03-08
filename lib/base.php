@@ -2,7 +2,7 @@
 /**
  * Description of base
  *
- * @author Нурсултан
+ * @author Нурсултан емес
  */
 class ctrl {
     
@@ -26,7 +26,7 @@ class ctrl {
 
 class app {
     public function __construct($path) {
-        
+        echo "<script>alert('".$path."');</script>";
         $this->route = explode("/",$path);
         try {
             $this->run();
